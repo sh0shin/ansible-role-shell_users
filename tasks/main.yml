@@ -1,0 +1,91 @@
+---
+
+# forced os variables
+- name: os forced variables
+  include_vars: "{{ lookup('first_found', params) }}"
+  vars:
+    params:
+      files:
+        - '{{ ansible_distribution }}-{{ ansible_machine | default("none") }}.yml'
+        - '{{ ansible_distribution }}-{{ ansible_distribution_release | default(0) }}.yml'
+        - '{{ ansible_distribution }}-{{ ansible_distribution_version | default(0) }}.yml'
+        - '{{ ansible_distribution }}-{{ ansible_distribution_major_version | default(0) }}.yml'
+        - '{{ ansible_distribution }}.yml'
+        - '{{ ansible_os_family }}.yml'
+        - 'main.yml'
+      paths:
+        - 'vars'
+  when: shell_users_enabled
+        and ansible_os_family | string in shell_users_os_family_supported
+  tags: [ shell-users ]
+
+# groups
+- name: create grouplist
+  group:
+    name: '{{ item.name }}'
+    gid: '{{ item.gid | default(omit) }}'
+    state: '{{ item.state | default(omit) }}'
+  loop: '{{ shell_users_grouplist }}'
+  when: shell_users_enabled
+        and ansible_os_family | string in shell_users_os_family_supported
+  tags: [ shell-users ]
+
+- name: create grouplist local
+  group:
+    name: '{{ item.name }}'
+    gid: '{{ item.gid | default(omit) }}'
+    state: '{{ item.state | default(omit) }}'
+  loop: '{{ shell_users_grouplist_local }}'
+  when: shell_users_enabled
+        and ansible_os_family | string in shell_users_os_family_supported
+  tags: [ shell-users ]
+
+# users
+- name: create userlist
+  user:
+    name: '{{ item.name }}'
+    uid: '{{ item.uid | default(omit) }}'
+    state: '{{ item.state | default(omit) }}'
+    comment: '{{ item.comment | default(omit) }}'
+    group: '{{ item.group | default(omit) }}'
+    groups: '{{ item.groups | default(omit) }}'
+    password: '{{ item[shell_users_password_hash] | default(omit) }}'
+
+    home: '{{ item.home | default(omit) }}'
+    skeleton: '{{ item.skeleton | default(omit) }}'
+    shell: '{{ item.shell | default(omit) }}'
+
+    createhome: '{{ shell_users_createhome }}'
+    move_home: '{{ shell_users_move_home }}'
+    update_password: '{{ shell_users_update_password }}'
+    remove: '{{ shell_users_remove }}'
+  loop: '{{ shell_users_userlist }}'
+  when: shell_users_enabled
+        and ansible_os_family | string in shell_users_os_family_supported
+  tags: [ shell-users ]
+
+- name: create userlist local
+  user:
+    name: '{{ item.name }}'
+    uid: '{{ item.uid | default(omit) }}'
+    state: '{{ item.state | default(omit) }}'
+    comment: '{{ item.comment | default(omit) }}'
+    group: '{{ item.group | default(omit) }}'
+    groups: '{{ item.groups | default(omit) }}'
+    password: '{{ item[shell_users_password_hash] | default(omit) }}'
+
+    home: '{{ item.home | default(omit) }}'
+    skeleton: '{{ item.skeleton | default(omit) }}'
+    shell: '{{ item.shell | default(omit) }}'
+
+    createhome: '{{ shell_users_createhome }}'
+    move_home: '{{ shell_users_move_home }}'
+    update_password: '{{ shell_users_update_password }}'
+    remove: '{{ shell_users_remove }}'
+  loop: '{{ shell_users_userlist_local }}'
+  when: shell_users_enabled
+        and ansible_os_family | string in shell_users_os_family_supported
+  tags: [ shell-users ]
+
+# vim: set syn=yaml sw=2 ts=2 et colorcolumn=160 :
+# eof

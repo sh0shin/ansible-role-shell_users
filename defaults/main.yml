@@ -1,0 +1,39 @@
+---
+
+# enabled
+shell_users_enabled: no
+
+# groups
+shell_users_admin_group: "admin"
+shell_users_grouplist:
+  - name: "ansible"
+    gid: 1000
+    state: present
+
+shell_users_grouplist_local: []
+
+# users
+shell_users_createhome: true
+shell_users_move_home: true
+shell_users_remove: true
+shell_users_update_password: always
+shell_users_password_hash: 'sha512'
+shell_users_userlist:
+  - name: "ansible"
+    uid: 1000
+    state: present
+    comment: "Ansible 8)-~"
+    group: "ansible"
+    groups:
+      - '{{ shell_users_admin_group }}'
+    # password (Ansible123!)
+    #sha512: "$6$gZA3hDKqAQwrsbPl$ZcxGunahpU4DqEvsJwMcU5f8byitmnyEoZjK7/xBA5t0skcEHlYMsoDRmmkJ8kvjwZwN3JHZPUT5fIbHrx/d.0"
+    #bcrypt: "$2b$08$hZaZOGF8vrJ2fq0Y6L4BuOmrRIHmQsLrMFdpnL4/HDcNMw.WRnbNm"
+    #home: ""
+    #skeleton: ""
+    #shell: ""
+
+shell_users_userlist_local: []
+
+# vim: set syn=yaml sw=2 ts=2 et colorcolumn=160 :
+# eof
