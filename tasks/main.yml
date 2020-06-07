@@ -64,6 +64,20 @@
         and ansible_os_family | string in shell_users_os_family_supported
   tags: [ shell-users ]
 
+- name: home mode userlist
+  file:
+    dest: '{{ item.home | default("/home/" ~ item.name) }}'
+    state: directory
+    mode: '{{ item.home_mode | default(shell_users_home_mode) }}'
+    owner: '{{ item.name }}'
+    group: '{{ item.group }}'
+  loop: '{{ shell_users_userlist }}'
+  when: shell_users_enabled
+        and ansible_os_family | string in shell_users_os_family_supported
+        and item.state is defined
+        and item.state == "present"
+  tags: [ shell-users ]
+
 - name: create userlist local
   user:
     name: '{{ item.name }}'
@@ -85,6 +99,20 @@
   loop: '{{ shell_users_userlist_local }}'
   when: shell_users_enabled
         and ansible_os_family | string in shell_users_os_family_supported
+  tags: [ shell-users ]
+
+- name: home mode userlist local
+  file:
+    dest: '{{ item.home | default("/home/" ~ item.name) }}'
+    state: directory
+    mode: '{{ item.home_mode | default(shell_users_home_mode) }}'
+    owner: '{{ item.name }}'
+    group: '{{ item.group }}'
+  loop: '{{ shell_users_userlist_local }}'
+  when: shell_users_enabled
+        and ansible_os_family | string in shell_users_os_family_supported
+        and item.state is defined
+        and item.state == "present"
   tags: [ shell-users ]
 
 # vim: set syn=yaml sw=2 ts=2 et colorcolumn=160 :

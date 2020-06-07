@@ -13,11 +13,12 @@ shell_users_grouplist:
 shell_users_grouplist_local: []
 
 # users
-shell_users_createhome: true
-shell_users_move_home: true
-shell_users_remove: true
+shell_users_createhome: yes
+shell_users_move_home: yes
+shell_users_remove: yes
 shell_users_update_password: always
 shell_users_password_hash: 'sha512'
+shell_users_home_mode: '0700'
 shell_users_userlist:
   - name: "ansible"
     uid: 1000
@@ -30,6 +31,7 @@ shell_users_userlist:
     #sha512: "$6$gZA3hDKqAQwrsbPl$ZcxGunahpU4DqEvsJwMcU5f8byitmnyEoZjK7/xBA5t0skcEHlYMsoDRmmkJ8kvjwZwN3JHZPUT5fIbHrx/d.0"
     #bcrypt: "$2b$08$hZaZOGF8vrJ2fq0Y6L4BuOmrRIHmQsLrMFdpnL4/HDcNMw.WRnbNm"
     #home: ""
+    #home_mode: ""
     #skeleton: ""
     #shell: ""
 
