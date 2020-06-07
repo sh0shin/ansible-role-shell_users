@@ -5,17 +5,16 @@ Create and update shell users
 `TODO`
 
 ## Role Variables
-`TODO`
+See `defaults/main.yml` for now.
 
 ## Dependencies
 `TODO`
-
 
 ## Example Playbook
 ```yaml
 - hosts: all
   roles:
-    - { role: sh0shin.shell_users }
+    - { role: sh0shin.shell_users, shell_users_enabled: yes }
 ```
 
 ## License
