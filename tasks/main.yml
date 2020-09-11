@@ -26,6 +26,8 @@
     gid: '{{ item.gid | default(omit) }}'
     state: '{{ item.state | default(omit) }}'
   loop: '{{ shell_users_grouplist }}'
+  loop_control:
+    label: '{{ item.name }}'
   when: shell_users_enabled
         and ansible_os_family | string in shell_users_os_family_supported
   tags: [ shell-users ]
@@ -36,6 +38,8 @@
     gid: '{{ item.gid | default(omit) }}'
     state: '{{ item.state | default(omit) }}'
   loop: '{{ shell_users_grouplist_local }}'
+  loop_control:
+    label: '{{ item.name }}'
   when: shell_users_enabled
         and ansible_os_family | string in shell_users_os_family_supported
   tags: [ shell-users ]
@@ -60,6 +64,8 @@
     update_password: '{{ shell_users_update_password }}'
     remove: '{{ shell_users_remove }}'
   loop: '{{ shell_users_userlist }}'
+  loop_control:
+    label: '{{ item.name }}'
   when: shell_users_enabled
         and ansible_os_family | string in shell_users_os_family_supported
   tags: [ shell-users ]
@@ -72,6 +78,8 @@
     owner: '{{ item.name }}'
     group: '{{ item.group }}'
   loop: '{{ shell_users_userlist }}'
+  loop_control:
+    label: '{{ item.name }}'
   when: shell_users_enabled
         and ansible_os_family | string in shell_users_os_family_supported
         and item.state is defined
@@ -97,6 +105,8 @@
     update_password: '{{ shell_users_update_password }}'
     remove: '{{ shell_users_remove }}'
   loop: '{{ shell_users_userlist_local }}'
+  loop_control:
+    label: '{{ item.name }}'
   when: shell_users_enabled
         and ansible_os_family | string in shell_users_os_family_supported
   tags: [ shell-users ]
@@ -109,6 +119,8 @@
     owner: '{{ item.name }}'
     group: '{{ item.group }}'
   loop: '{{ shell_users_userlist_local }}'
+  loop_control:
+    label: '{{ item.name }}'
   when: shell_users_enabled
         and ansible_os_family | string in shell_users_os_family_supported
         and item.state is defined
