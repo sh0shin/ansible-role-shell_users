@@ -14,6 +14,7 @@
         - '{{ ansible_os_family }}.yml'
         - 'main.yml'
       paths:
+        #- '{{ inventory_dir }}/vars'
         - 'vars'
   when: shell_users_enabled
         and ansible_os_family | string in shell_users_os_family_supported
