@@ -37,5 +37,5 @@ shell_users_userlist:
 
 shell_users_userlist_local: []
 
-# vim: set syn=yaml sw=2 ts=2 et colorcolumn=160 :
+# vim: set ft=yaml.ansible sw=2 ts=2 et colorcolumn=160 :
 # eof
